@@ -11,7 +11,7 @@ type Props = {}
 function Signup({ }: Props) {
     return (
         <AuthLayout>
-            <form className='space-y-5 text-gray-700 py-3'>
+            <form className='space-y-5 text-gray-700'>
                 <Logo />
                 <h1 className='text-5xl font-bold text-gray-800'>Create an account</h1>
                 <div className='flex flex-col gap-3'>
@@ -29,7 +29,7 @@ function Signup({ }: Props) {
                     <Image src='/images/socials/google.svg' alt='google icon' width={48} height={48} className='h-6 w-6' />
                     <p className='text-sm'>Sign up with Google</p>
                 </div>
-                <Link className='inline-block text-primary underline' href='/'><p>Login <BsArrowRight className='inline ml-1' /></p></Link>
+                <Link className='inline-block text-primary underline text-sm' href='/'><p>Login <BsArrowRight className='inline ml-1' /></p></Link>
             </form>
         </AuthLayout>
     )

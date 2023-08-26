@@ -10,8 +10,8 @@ import { BsArrowRight } from 'react-icons/bs'
 type Props = {}
 
 export default function Auth({ }: Props) {
+    const SIGN_UP_LINK = '/auth/'
     return (
-
         <AuthLayout>
             <form className='space-y-7 text-gray-700 py-3'>
                 <Logo />
@@ -21,12 +21,12 @@ export default function Auth({ }: Props) {
                     <InputField label='Password' type='password' />
                     <Button>Login</Button>
                 </div>
-                <p className='text-center text-sm font-semibold text-gray-700'>or sign in with your socials</p>
-                <div className='flex justify-center items-center font-semibold gap-4 border border-gray-400 p-2 rounded-md cursor-pointer'>
+                <p className='text-center text-sm text-gray-700'>or sign in with your socials</p>
+                <div className='flex justify-center items-center font-semibold gap-4 border border-gray-300 p-2 rounded-md cursor-pointer'>
                     <Image src='/images/socials/google.svg' alt='google icon' width={48} height={48} className='h-6 w-6' />
                     <p className='text-sm'>Sign in with Google</p>
                 </div>
-                <Link className='inline-block text-primary underline' href='/'><p>Create an account <BsArrowRight className='inline ml-1' /></p></Link>
+                <Link className='inline-block text-primary text-sm' href={SIGN_UP_LINK} ><p>Create an account <BsArrowRight className='inline ml-1' /></p></Link>
             </form>
         </AuthLayout>
     )
