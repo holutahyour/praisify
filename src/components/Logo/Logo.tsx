@@ -7,7 +7,7 @@ const lobster = Lobster({ subsets: ['latin'], weight: "400" })
 
 const Logo = (props: Props) => {
   return (
-    <h1 className={`${lobster.className} text-3xl`}>Praisify</h1>
+    <h1 className={`${lobster.className} text-3xl text-primary/80`}>Praisify</h1>
   )
 }
 export default Logo

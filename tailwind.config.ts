@@ -11,6 +11,9 @@ const config: Config = {
       backgroundImage: {
         'auth': 'url("images/auth/auth.jpg")',
       },
+      colors: {
+        'primary': "rgb(var(--color-primary-dark-rgb) / <alpha-value>)"
+      }
     },
   },
   plugins: [],

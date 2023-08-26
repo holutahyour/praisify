@@ -39,21 +39,21 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
         </section>
 
         <main
-          className="flex justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6 overflow-y-auto h-screen"
+          className="flex justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6 md:overflow-y-auto h-screen"
         >
-          <div className="max-w-xl lg:max-w-3xl lg:w-[25rem]">
+          <div className="max-w-xl lg:max-w-3xl lg:w-[25rem] my-auto">
             <div className="relative -mt-16 block lg:hidden">
               <a
                 className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-blue-600 sm:h-20 sm:w-20"
                 href="/"
               >
-                <Image
+                {/* <Image
                   alt="Couple Photo"
                   src="/images/logo.png"
                   width={229}
                   height={55}
                   quality={100}
-                />
+                /> */}
               </a>
 
               <h1
