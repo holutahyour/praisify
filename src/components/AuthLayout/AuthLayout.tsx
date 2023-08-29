@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -12,8 +13,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
             alt="Auth Image"
             src="/images/auth/auth-full.jpg"
             className="absolute inset-0 h-full w-full object-cover opacity-70"
-            width={5384}
-            height={3888}
+            fill
             quality={100}
           />
 

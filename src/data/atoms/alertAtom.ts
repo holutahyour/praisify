@@ -1,6 +1,7 @@
 import { atom, useRecoilState } from "recoil";
 
-type AlertType = {
+export type AlertType = {
+    id?: string;
     type: 'success' | 'error' | 'warning';
     message: string
 }
@@ -10,21 +11,13 @@ export const alert_list_state = atom<AlertType[]>({
     default: []
 })
 
-export const useSetAlert = () => {
-    let alert: AlertType = {
-        type: "success",
-        message: ""
-    };
-
-    const [alerts, setAlerts] = useRecoilState<AlertType[]>(alert_list_state)
-    const setAlert = (x: AlertType) => alert = x
-
-    if (alert) {        
-        setAlerts((prev) => [
-            ...prev,
-            alert
-        ])
-    }
-
-    return setAlert
+export const add_alert_to_array = (alert: AlertType, alerts: AlertType[]) => {
+    alert.id = get_random_string();
+    return [...alerts, alert]
 }
+
+export const remove_alert_to_array = (alert: AlertType, alerts: AlertType[]) => {
+    return alerts.filter(x => x.id !== alert.id)
+}
+
+export const get_random_string = (length: number = 10) => Math.random().toString(36).substring(2,length+2);

@@ -6,15 +6,18 @@ import Logo from '@/components/Logo'
 import { auth } from '@/firebase/firebase'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { BsArrowRight } from 'react-icons/bs'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/navigation'
-import { useSetAlert } from '@/data/atoms/alertAtom'
+import { useSetRecoilState } from 'recoil'
+import { AlertType, add_alert_to_array, alert_list_state, get_random_string, remove_alert_to_array } from '@/data/atoms/alertAtom'
 type Props = {}
 
 function Signup({ }: Props) {
     const HOME_URL = '/'
+
+    const setAlert = useSetRecoilState(alert_list_state)
 
     const router = useRouter();
     const [
@@ -27,6 +30,13 @@ function Signup({ }: Props) {
     const [signup, setSignup] = useState(
         { email: '', confirm_email: '', first_name: '', last_name: '', password: '' }
     )
+    
+    const set_alert = useCallback((alert: AlertType) => {
+        setAlert((prev) => add_alert_to_array(alert, prev))
+        setTimeout(() => {
+            setAlert((prev) => remove_alert_to_array(alert, prev))
+        }, 7000);
+    }, [setAlert])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSignup((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -36,27 +46,26 @@ function Signup({ }: Props) {
         e.preventDefault();
         try {
             const created_user = await createUserWithEmailAndPassword(signup.email, signup.password)
-            if (!created_user) return; 
-
+            if (!created_user) return;
+            set_alert({ id: get_random_string(), type: 'success', message: 'registration successful' });
             router.push(HOME_URL)
         } catch (error: any) {
             alert(error.message)
         }
     }
 
-    const setAlert = useSetAlert()
-
     useEffect(() => {
-      if(error) setAlert({type: 'error', message: error.message})    
-      
-    }, [error, setAlert])
-        
+        if (error) {
+            set_alert({ id: get_random_string(), type: 'error', message: error.message });            
+        }
+    }, [error, set_alert])
+
 
     return (
         <AuthLayout>
             <form className='space-y-7 text-gray-700' onSubmit={handleRegistration}>
                 <Logo />
-                <h1 className='text-5xl font-bold text-gray-800'>Create an account</h1>
+                <h1 className='text-5xl font-extrabold text-gray-800'>Create an account</h1>
                 <div className='flex flex-col gap-3'>
                     <InputField onChange={handleChange} label='Email' type='email' name='email' />
                     <InputField onChange={handleChange} label='Confirm Email' name='confirm_email' />
@@ -72,7 +81,7 @@ function Signup({ }: Props) {
                     <Image src='/images/socials/google.svg' alt='google icon' width={48} height={48} className='h-6 w-6' />
                     <p className='text-sm'>Sign up with Google</p>
                 </div>
-                <Link className='inline-block text-primary underline text-sm' href='/'><p>Login <BsArrowRight className='inline ml-1' /></p></Link>
+                <Link className='inline-block text-primary underline text-sm' href='/'><p>Login<BsArrowRight className='inline ml-1' /></p></Link>
             </form>
         </AuthLayout>
     )
