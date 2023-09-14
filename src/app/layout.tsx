@@ -2,7 +2,6 @@ import Container from '@/components/Container'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Albert_Sans, DM_Sans, Inter, Oswald, Poppins } from 'next/font/google'
-import Header from '@/components/Header'
 const inter = Inter({ subsets: ['latin'] })
 const poppins = Poppins({ weight: ["300", "400", "500", "600", "700", "800"], subsets: ['latin'] })
 const albert_sans = Albert_Sans({ weight: ["300", "400", "500", "600", "700", "800", "900"], subsets: ['latin'] })
@@ -20,8 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${albert_sans.className} text-gray-800`}>
-        <Header />
+      <body className={`${albert_sans.className} text-gray-800 flex flex-col h-screen`}>
         <Container>
           {children}
         </Container>

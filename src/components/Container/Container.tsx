@@ -3,14 +3,16 @@ import React, { ReactNode } from 'react'
 import { RecoilRoot } from 'recoil'
 import AlertCollection from '../AlertCollection'
 
-type Props = { children: ReactNode }
+interface Props extends React.HTMLAttributes<HTMLDivElement> { children: ReactNode }
 
-const Container = ({ children }: Props) => {
+const Container = (props: Props) => {
   return (
-    <RecoilRoot>
-      <AlertCollection />
-      {children}
-    </RecoilRoot>
+    <div {...props}>
+      <RecoilRoot>
+        <AlertCollection />
+        {props.children}
+      </RecoilRoot>
+    </div>
   )
 }
 export default Container
