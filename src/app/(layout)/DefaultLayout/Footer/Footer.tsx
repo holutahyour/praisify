@@ -20,7 +20,7 @@ function Footer({ }: Props) {
                         <BsInstagram size={20} />
                     </div>
                 </div>
-                <div className='flex gap-4 text-sm text-gray-300'>
+                <div className='flex gap-4 text-xs text-gray-300'>
                     <p>@ {new Date().getFullYear()} Praisify</p>
                     <p>Terms of service</p>
                     <p>Privacy Policy</p>

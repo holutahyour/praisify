@@ -9,9 +9,13 @@ const AppLayout = (props: Props) => {
   return (
     <div className='flex flex-col h-screen'>
       <Header />
-      <div className='flex-1 flex'>
+      <div className='flex-1 flex overflow-hidden'>
         <Aside />
-        {props.children}
+        <div className='overflow-auto flex-1'>
+          <main className='max-w-screen-lg w-full mx-auto p-10 space-y-5'>
+            {props.children}
+          </main>
+        </div>
       </div>
       <Footer />
     </div>

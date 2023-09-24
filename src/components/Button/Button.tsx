@@ -10,7 +10,7 @@ function Button(props: IButtonProps) {
         else if(props.size === "xl") return "px-20 py-[1rem] text-lg"
     }
     return (
-        <button {...props} className={`px-4 py-[.4rem] min-w-fit ${props.isGhost ? "text-gray-600 bg-none hover:underline hover:text-gray-500" : "text-white bg-primary hover:bg-primary/95"}  font-semibold rounded-[0.2rem] text-sm ${size()} ${props.className}`}>{props.children}</button>
+        <button {...props} className={`px-4 py-[.4rem] min-w-min ${props.isGhost ? "text-gray-600 bg-none hover:underline hover:text-gray-500" : "text-white bg-primary hover:bg-primary/95"}  font-semibold rounded-[0.2rem] text-sm ${size()} ${props.className}`}>{props.children}</button>
     )
 }
 

@@ -1,4 +1,5 @@
-import { BiCalendarEvent, BiSolidHelpCircle } from "react-icons/bi";
+import { BiCalendarEvent, BiHelpCircle } from "react-icons/bi";
+import { BsCalendarDate } from "react-icons/bs";
 
 function Aside() {
   const menus = [
@@ -10,9 +11,9 @@ function Aside() {
 
   return (
     <div className="bg-gray-100 p-2.5 flex justify-between flex-col">
-      <div className="bg-gray-600 w-9 h-9 grid place-items-center rounded-lg text-white"><BiCalendarEvent size={23} /></div>
+      <div className="bg-gray-600 w-9 h-9 grid place-items-center rounded-lg text-white"><BsCalendarDate size={20} /></div>
       <div>
-        <div className="w-9 h-9 grid place-items-center rounded-lg text-gray-600"><BiSolidHelpCircle size={25} /></div>
+        <div className="w-9 h-9 grid place-items-center rounded-lg text-gray-600"><BiHelpCircle size={23} /></div>
       </div>
     </div>
   )

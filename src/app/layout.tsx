@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${albert_sans.className} text-gray-800 flex flex-col h-screen`}>
+      <body className={`${poppins.className} text-gray-800 flex flex-col h-screen`}>
         <Container>
           {children}
         </Container>
