@@ -1,7 +1,5 @@
 import React from 'react'
 import AppLayout from '../(layout)/AppLayout/AppLayout'
-import Button from '@/components/Button'
-import InputField from '@/components/Form/InputField'
 import SelectField from '@/components/Form/SelectField'
 import Table from '@/components/Table'
 import AppModal from '@/components/Modal/Modal'
@@ -12,7 +10,7 @@ type Props = {
 }
 
 const Event = ({ searchParams }: Props) => {
-    const isOpen = Boolean(searchParams?.create_modal) || false;
+    const isOpen = Boolean(searchParams?.cm) || false;
 
     return (
         <AppLayout>
