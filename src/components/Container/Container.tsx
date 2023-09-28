@@ -4,25 +4,27 @@ import { RecoilRoot } from 'recoil'
 import AlertCollection from '../AlertCollection'
 import { createTheme } from '@mui/material/styles'
 import { ThemeProvider } from '@emotion/react'
+import { StoreContext, store } from '@/data/stores/store'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> { children: ReactNode }
 
 const Container = (props: Props) => {
   const theme = createTheme({
     typography: {
-      fontFamily: ['Poppins','sans-serif',].join(','),
+      fontFamily: ['Poppins', 'sans-serif',].join(','),
     },
   });
 
   return (
     <div {...props}>
-      <RecoilRoot>
-        <ThemeProvider theme={theme}>
-          <AlertCollection />
-          {props.children}
-        </ThemeProvider>
-
-      </RecoilRoot>
+      <StoreContext.Provider value={store}>
+        <RecoilRoot>
+          <ThemeProvider theme={theme}>
+            <AlertCollection />
+            {props.children}
+          </ThemeProvider>
+        </RecoilRoot>
+      </StoreContext.Provider>
     </div>
   )
 }

@@ -10,13 +10,15 @@ type IAppModalProps = {
   element?: React.ReactNode,
   title: string,
   isOpen: boolean,
+  buttonLink?: string,
+  cancelLink?: string,
 }
 
-export default function AppModal({ children, element, title, isOpen = false }: IAppModalProps) {  
+export default function AppModal({ children, element, title, buttonLink, cancelLink, isOpen = false }: IAppModalProps) {  
   return (
     <div>
       <Link
-        href={`?${new URLSearchParams({ create_modal: "true" })}`}
+        href={buttonLink || ""}
       ><Button>{title}</Button></Link>
 
       <Modal
@@ -32,8 +34,8 @@ export default function AppModal({ children, element, title, isOpen = false }: I
                 <div className='flex gap-3'>
                   <FaRegWindowMinimize className="cursor-pointer" size={20} />
                   <Link
-                    href={`?`}
-                  ><IoMdClose className="cursor-pointer" size={25} /></Link>
+                    href={cancelLink || ""}
+                    ><IoMdClose className="cursor-pointer" size={25} /></Link>
                 </div>
               </div>
               <div className='flex-1 overflow-y-auto'>
@@ -43,7 +45,7 @@ export default function AppModal({ children, element, title, isOpen = false }: I
                 <h1 className='text-xl font-semibold'></h1>
                 <div className='flex gap-2'>
                   <Link
-                    href={`?`}
+                    href={cancelLink || ""}
                   >
                     <Button isGhost={true}>Cancel</Button>
                   </Link>

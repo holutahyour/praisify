@@ -5,13 +5,13 @@ import { BsGearWide } from "react-icons/bs";
 import { HiOutlineTicket, HiUser } from "react-icons/hi";
 import Logo from "@/components/Logo";
 import Link from "next/link";
+import { EVENT_LINK } from "@/utils/applinks";
 
 function Header() {
-  const CREATE_EVENT_LINK = '/event?cm=true'
   const menus = [
     {
       title: "Create Event",
-      link: CREATE_EVENT_LINK,
+      link: EVENT_LINK.CREATE,
       active: false
     },
     {
@@ -28,7 +28,9 @@ function Header() {
 
   return (
     <header className="flex items-center px-5 bg-white shadow-md">
-      <a href="/"><div className="p-1 mr-4 text-lg font-semibold text-gray-700"><Logo className="text-2xl"/></div></a>
+      <Link href="/">
+        <div className="p-1 mr-4 text-lg font-semibold text-gray-700"><Logo className="text-2xl" /></div>
+      </Link>
       <nav className="flex items-center justify-end flex-1 h-16 font-semibold gap-4">
         {menus.map((x, index) => (
           <Link href={x.link || '/'} key={index} className={x.active ? "h-full flex items-center border-b-[3px] border-b-primary" : "grid"} >

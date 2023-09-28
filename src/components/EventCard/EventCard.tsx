@@ -21,13 +21,13 @@ const EventCard = ({ event }: Props) => {
       </div>
       <div className='p-3.5 flex flex-col gap-3'>
         <p className='flex gap-1 text-xs text-gray-500 items-center capitalize font-semibold'>promoted <span><BiSolidHelpCircle size={14} /></span></p>
-        <h1 className='capitalize font-bold text-xl tracking-tight leading-snug'>{title}</h1>
+        <h1 className='capitalize font-semibold text-xl tracking-tight leading-snug'>{title}</h1>
         <p className='text-primary text-sm font-bold'>{date}</p>
         <div className='text-gray-500 text-sm font-medium'>
           <p>{venue} <span className='w-1 h-1 bg-gray-500 rounded-[100%]'></span></p>
           <p>{(fee !== 0) ? fee : "free"}</p>
         </div>
-        <div className='text-sm font-bold mb-3'>
+        <div className='text-sm font-semibold mb-3'>
           <p>{organizer}</p>
           <p className='flex gap-1'><BiSolidUserCircle size={18} />{no_of_followers} followers</p>
         </div>

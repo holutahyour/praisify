@@ -9,6 +9,7 @@ import { auth } from "@/firebase/firebase";
 import { useSignOut } from "react-firebase-hooks/auth";
 import Loader from "@/components/Loader";
 import UserMenu from "../../UserMenu";
+import Link from "next/link";
 
 function Header() {
   const menus = [
@@ -30,8 +31,9 @@ function Header() {
 
   return (
     <header className="flex items-center px-5 bg-white shadow-md">
-      <a href="/"><div className="p-1 mr-4 text-lg font-semibold text-gray-700"><Logo className="text-2xl" /></div></a>
-      <div className="flex items-center flex-1 justify-end">
+      <Link href="/">
+        <div className="p-1 mr-4 text-lg font-semibold text-gray-700"><Logo className="text-2xl" /></div>
+      </Link>      <div className="flex items-center flex-1 justify-end">
         <div className="px-1 mx-1 text-xl cursor-pointer">
           <RiNotification4Fill />
         </div>
