@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Table from '@/components/Table'
 import AppModal from '@/components/Modal/Modal'
-import CreateOrganizer from './(create)/create'
+import CreateOrganizer from './(create)/Create'
 import { ORGANIZER_LINK } from '@/utils/applinks'
 import AppLayout from '@/app/(layout)/AppLayout/AppLayout'
 import services from '@/firebase/firebaseService'
