@@ -8,7 +8,7 @@ import services from '@/firebase/firebaseService'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/firebase/firebase'
 import { useRouter } from 'next/navigation'
-import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { GridColDef } from '@mui/x-data-grid'
 import CreateOrganizer from './(create)/Create'
 
 type Props = {
