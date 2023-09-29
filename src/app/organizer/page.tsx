@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import Table from '@/components/Table'
 import AppModal from '@/components/Modal/Modal'
-import CreateOrganizer from './(create)/Create'
 import { ORGANIZER_LINK } from '@/utils/applinks'
 import AppLayout from '@/app/(layout)/AppLayout/AppLayout'
 import services from '@/firebase/firebaseService'
@@ -10,6 +9,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/firebase/firebase'
 import { useRouter } from 'next/navigation'
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import CreateOrganizer from './(create)/Create'
 
 type Props = {
     searchParams?: { [key: string]: string | string[] | undefined | boolean };
