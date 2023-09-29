@@ -3,7 +3,7 @@ import AppLayout from '../(layout)/AppLayout/AppLayout'
 import SelectField from '@/components/Form/SelectField'
 import Table from '@/components/Table'
 import AppModal from '@/components/Modal/Modal'
-import CreateEvent from './(create)/Create'
+import CreateEvent from './(create)/create'
 import { EVENT_LINK } from '@/utils/applinks'
 
 type Props = {

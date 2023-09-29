@@ -1,14 +1,27 @@
-import { BiCaretDown, BiSolidLike } from "react-icons/bi";
+"use client"
+import { BiSolidLike } from "react-icons/bi";
 import { RiNotification4Fill } from "react-icons/ri";
 import { BiSolidHelpCircle } from "react-icons/bi";
 import { BsGearWide } from "react-icons/bs";
 import { HiOutlineTicket, HiUser } from "react-icons/hi";
 import Logo from "@/components/Logo";
 import Link from "next/link";
-import { EVENT_LINK } from "@/utils/applinks";
+import { AUTH_LINKS, EVENT_LINK, HOME } from "@/utils/applinks";
+import UserMenu from "@/components/UserMenu";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/firebase";
+import Button from "@/components/Button";
+
+type Menu = {
+  title: string,
+  link?: string,
+  icon?: React.ReactNode,
+  active: boolean,
+}
 
 function Header() {
-  const menus = [
+  const [user, loading] = useAuthState(auth)
+  const auth_menus: Menu[] = [
     {
       title: "Create Event",
       link: EVENT_LINK.CREATE,
@@ -26,6 +39,16 @@ function Header() {
     },
   ]
 
+  const home_menu: Menu[] = [
+    {
+      title: "Create Event",
+      link: HOME.HOME,
+      active: false
+    },
+  ]
+
+  const menus = (user && !loading) ? auth_menus : home_menu
+
   return (
     <header className="flex items-center px-5 bg-white shadow-md">
       <Link href="/">
@@ -42,24 +65,41 @@ function Header() {
         ))}
 
       </nav>
-      <div className="flex items-center">
-        <div className="px-1 mx-1 text-xl cursor-pointer">
-          <RiNotification4Fill />
-        </div>
-        <div className="px-1 mx-1 text-2xl cursor-pointer">
-          <BiSolidHelpCircle />
-        </div>
-        <div className="px-1 mx-1 text-xl cursor-pointer">
-          <BsGearWide />
-        </div>
-        <div className="px-1 mx-1 cursor-pointer">
-          <div className="flex justify-center items-center rounded-full bg-gray-200 text-gray-500 w-7 h-7 ">
-            <HiUser />
-          </div>
-        </div>
-      </div>
+      {(user && !loading) ? <AuthMenu /> : <AuthButtons />}
     </header>
   )
 }
 
 export default Header
+
+const AuthMenu = () => {
+  return (
+    <div className="flex items-center">
+      <div className="px-1 mx-1 text-xl cursor-pointer">
+        <RiNotification4Fill />
+      </div>
+      <div className="px-1 mx-1 text-2xl cursor-pointer">
+        <BiSolidHelpCircle />
+      </div>
+      <div className="px-1 mx-1 text-xl cursor-pointer">
+        <BsGearWide />
+      </div>
+      <div className="px-1 mx-1 cursor-pointer">
+        <UserMenu />
+      </div>
+    </div>
+  )
+}
+
+const AuthButtons = () => {
+  return (
+    <div className="flex items-center">
+      <div className="px-2 mx-1 text-xl cursor-pointer">
+        <Link href={AUTH_LINKS.LOGIN}><p className="text-xs font-semibold">Log in</p></Link>
+      </div>
+      <div className="px-1 mx-1 text-2xl cursor-pointer">
+      <Link href={AUTH_LINKS.SIGNUP}><Button>Join us</Button></Link>
+      </div>
+    </div>
+  )
+}

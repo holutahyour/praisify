@@ -12,9 +12,10 @@ type IAppModalProps = {
   isOpen: boolean,
   buttonLink?: string,
   cancelLink?: string,
+  handleSubmit?: () => void
 }
 
-export default function AppModal({ children, element, title, buttonLink, cancelLink, isOpen = false }: IAppModalProps) {  
+export default function AppModal({ children, element, title, buttonLink, cancelLink, handleSubmit, isOpen = false }: IAppModalProps) {  
   return (
     <div>
       <Link
@@ -49,7 +50,7 @@ export default function AppModal({ children, element, title, buttonLink, cancelL
                   >
                     <Button isGhost={true}>Cancel</Button>
                   </Link>
-                  <Button>Create</Button>
+                  <Button onClick={handleSubmit}>Create</Button>
                 </div>
               </div>
             </>

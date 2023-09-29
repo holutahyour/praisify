@@ -7,6 +7,7 @@ import Logo from '@/components/Logo/Logo'
 import PageLoader from '@/components/PageLoader/PageLoader'
 import { AlertType, add_alert_to_array, alert_list_state, get_random_string, remove_alert_to_array } from '@/data/atoms/alertAtom'
 import { auth } from '@/firebase/firebase'
+import { HOME } from '@/utils/applinks'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -18,8 +19,6 @@ import { useSetRecoilState } from 'recoil'
 type Props = {}
 
 export default function Auth({ }: Props) {
-    const SIGN_UP_LINK = '/auth/'
-    const HOME_URL = '/'
 
     const setAlert = useSetRecoilState(alert_list_state)
     const [
@@ -43,7 +42,7 @@ export default function Auth({ }: Props) {
             const signed_in_user = await signInWithEmailAndPassword(login.email, login.password);
             if (!signed_in_user) return;
             set_alert({ id: get_random_string(), type: 'success', message: 'registration successful' });
-            router.push(HOME_URL)
+            router.push(HOME.HOME)
         } catch (error: any) {
             alert(error.message)
         }
@@ -57,7 +56,7 @@ export default function Auth({ }: Props) {
     }, [setAlert])
 
     useEffect(() => {
-        if (userState) router.push(HOME_URL)
+        if (userState) router.push(HOME.HOME)
         if (!loadingState && !userState) setPageLoading(false)
 
         if (error) {
@@ -83,7 +82,7 @@ export default function Auth({ }: Props) {
                     <Image src='/images/socials/google.svg' alt='google icon' width={48} height={48} className='h-6 w-6' />
                     <p className='text-sm'>Sign in with Google</p>
                 </div>
-                <Link className='inline-block text-primary text-sm' href={SIGN_UP_LINK} ><p>Create an account <BsArrowRight className='inline ml-1' /></p></Link>
+                <Link className='inline-block text-primary text-sm' href={HOME.SIGN_UP_LINK} ><p>Create an account <BsArrowRight className='inline ml-1' /></p></Link>
             </form>
         </AuthLayout>
     )

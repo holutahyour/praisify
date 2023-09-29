@@ -7,7 +7,7 @@ type Props = {}
 const PageLoader = (props: Props) => {
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
-      <Loader type='infinityspin' />
+      <Loader type='oval' />
     </div>
   )
 }

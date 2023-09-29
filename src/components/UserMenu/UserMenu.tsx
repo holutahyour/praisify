@@ -1,3 +1,4 @@
+"use client"
 import Loader from '@/components/Loader'
 import { auth } from '@/firebase/firebase'
 import React from 'react'
@@ -8,7 +9,7 @@ type Props = {}
 
 function UserMenu({ }: Props) {
     return (
-        <div className="px-1 mx-1 cursor-pointer group relative">
+        <div className="px-1 mx-1 cursor-pointer group relative z-[1000]">
             <UserPlaceHolder />
             <div className="absolute top-8 end-0 scale-0 group-hover:scale-100 border-[.5px] rounded-sm bg-white">
                 <div className="p-4 space-y-2 border-b-2">

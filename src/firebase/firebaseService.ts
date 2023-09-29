@@ -1,10 +1,22 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from "firebase/firestore"
 import { firestore } from "./firebase"
+import { toast } from "react-toastify"
 
 
 const get_list = async (store: string) => {
-    const storeSnapshot = await getDocs(collection(firestore, store))
-    return getDatas(storeSnapshot)
+    try {
+        const storeSnapshot = await getDocs(collection(firestore, store))
+        toast(`created successfully`)
+
+        console.log(getDatas(storeSnapshot));
+        
+
+        return getDatas(storeSnapshot)
+    } catch (error) {
+        toast.error(`an error occured`)
+        console.log(error);
+        
+    }
 }
 
 const get_detail = async (store: string, id: string) => {
@@ -14,15 +26,23 @@ const get_detail = async (store: string, id: string) => {
 }
 
 const create_doc = async (store: string, data: any) => {
-    const docSnapshot = await setDoc(doc(firestore, store), data)
+    try {
+        const docSnapshot = await addDoc(collection(firestore, store), data)
+        toast(`created successfully`)
 
-    return(docSnapshot)
+        return (docSnapshot)
+    } catch (error) {
+        toast.error(`${store} creation failed`)
+        console.log(error);
+        
+    }
+
 }
 
 const delete_doc = async (store: string, id: string) => {
     const docSnapshot = await deleteDoc(doc(firestore, store, id))
 
-    return(docSnapshot)
+    return (docSnapshot)
 }
 
 const services = {
@@ -34,4 +54,11 @@ const services = {
 
 export default services;
 
-export const getDatas = (datas: any) => datas.docs.map((doc: any) => doc.data())
+export const getDatas = (datas: any) => datas.docs.map((doc: any, index: number) => {
+    console.log(doc);
+    
+    const data = doc.data();
+    data.id = doc.id
+    data.sn = index + 1
+    return data; 
+})

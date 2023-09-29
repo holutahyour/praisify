@@ -1,15 +1,12 @@
 "use client"
-import { BiCaretDown, BiSolidLike } from "react-icons/bi";
+import { BiSolidLike } from "react-icons/bi";
 import { RiNotification4Fill } from "react-icons/ri";
 import { BiSolidHelpCircle } from "react-icons/bi";
 import { BsGearWide } from "react-icons/bs";
-import { HiOutlineTicket, HiUser } from "react-icons/hi";
+import { HiOutlineTicket } from "react-icons/hi";
 import Logo from "@/components/Logo";
-import { auth } from "@/firebase/firebase";
-import { useSignOut } from "react-firebase-hooks/auth";
-import Loader from "@/components/Loader";
-import UserMenu from "../../UserMenu";
 import Link from "next/link";
+import UserMenu from "@/components/UserMenu";
 
 function Header() {
   const menus = [
