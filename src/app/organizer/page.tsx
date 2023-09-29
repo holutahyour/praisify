@@ -9,7 +9,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/firebase/firebase'
 import { useRouter } from 'next/navigation'
 import { GridColDef } from '@mui/x-data-grid'
-import CreateOrganizer from './(create)/Create'
+import CreateOrganizer from './(create)/create'
 
 type Props = {
     searchParams?: { [key: string]: string | string[] | undefined | boolean };
