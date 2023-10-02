@@ -16,8 +16,8 @@ const CreateEvent = ({ }: Props) => {
                 <InputField type='date' label='End Date' />
             </div>
             <TextAreaField label='Event Description' />
-            <InputField label='Organizer Name' />
-            <TextAreaField label='Organizer Description' />
+            <InputField label='Organization Name' />
+            <TextAreaField label='Organization Description' />
         </Form>
     )
 }

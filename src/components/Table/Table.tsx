@@ -49,6 +49,7 @@ export default function DataTable({ columns, rows }: Props) {
         sx={{ border: 'none' }}
         rows={rows}
         columns={columns}
+        getRowHeight={() => 'auto'}
       />
     </div>
   );

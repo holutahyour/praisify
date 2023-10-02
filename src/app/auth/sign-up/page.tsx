@@ -8,14 +8,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useCallback, useEffect, useState } from 'react'
 import { BsArrowRight } from 'react-icons/bs'
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/navigation'
 import { useSetRecoilState } from 'recoil'
 import { AlertType, add_alert_to_array, alert_list_state, get_random_string, remove_alert_to_array } from '@/data/atoms/alertAtom'
+import { toast } from 'react-toastify'
+import services from '@/firebase/firebaseService'
 type Props = {}
 
 function Signup({ }: Props) {
     const HOME_URL = '/'
+    const USER_STORE = 'users'
+
+    const { create_doc } = services
 
     const setAlert = useSetRecoilState(alert_list_state)
 
@@ -27,10 +32,12 @@ function Signup({ }: Props) {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
 
+    const [updateProfile, updating, uperror] = useUpdateProfile(auth);
+
     const [signup, setSignup] = useState(
         { email: '', confirm_email: '', first_name: '', last_name: '', password: '' }
     )
-    
+
     const set_alert = useCallback((alert: AlertType) => {
         setAlert((prev) => add_alert_to_array(alert, prev))
         setTimeout(() => {
@@ -47,16 +54,42 @@ function Signup({ }: Props) {
         try {
             const created_user = await createUserWithEmailAndPassword(signup.email, signup.password)
             if (!created_user) return;
-            set_alert({ id: get_random_string(), type: 'success', message: 'registration successful' });
-            router.push(HOME_URL)
+
+            const profile = {
+                displayName: `${signup.first_name} ${signup.last_name}`,
+            }
+
+            const user = {
+                displayName: `${signup.first_name} ${signup.last_name}`,
+                first_name: signup.first_name,
+                last_name: signup.first_name,
+                email: created_user.user.email,
+                phone: created_user.user.phoneNumber,
+                photo_url: created_user.user.photoURL,
+                provider_id: created_user.user.providerId,
+                uid: created_user.user.uid,
+                tenant_id: created_user.user.tenantId,
+            }
+
+            updateProfile(profile)
+                .then(() => {
+                    toast('registration successful');
+                    router.push(HOME_URL)
+                })
+                .catch((error: any) => {
+                    toast.error(error.message as string)
+                });
+
+            create_doc(USER_STORE, user, user.uid)
+
         } catch (error: any) {
-            alert(error.message)
+            toast.error(error.message)
         }
     }
 
     useEffect(() => {
         if (error) {
-            set_alert({ id: get_random_string(), type: 'error', message: error.message });            
+            set_alert({ id: get_random_string(), type: 'error', message: error.message });
         }
     }, [error, set_alert])
 

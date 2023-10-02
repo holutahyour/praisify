@@ -10,17 +10,18 @@ type IAppModalProps = {
   element?: React.ReactNode,
   title: string,
   isOpen: boolean,
+  buttonTitle?: string,
   buttonLink?: string,
   cancelLink?: string,
   handleSubmit?: () => void
 }
 
-export default function AppModal({ children, element, title, buttonLink, cancelLink, handleSubmit, isOpen = false }: IAppModalProps) {  
+export default function AppModal({ children, element, title, buttonTitle, buttonLink, cancelLink, handleSubmit, isOpen = false }: IAppModalProps) {
   return (
     <div>
       <Link
         href={buttonLink || ""}
-      ><Button>{title}</Button></Link>
+      ><Button>{buttonTitle || title}</Button></Link>
 
       <Modal
         open={isOpen}
@@ -36,7 +37,7 @@ export default function AppModal({ children, element, title, buttonLink, cancelL
                   <FaRegWindowMinimize className="cursor-pointer" size={20} />
                   <Link
                     href={cancelLink || ""}
-                    ><IoMdClose className="cursor-pointer" size={25} /></Link>
+                  ><IoMdClose className="cursor-pointer" size={25} /></Link>
                 </div>
               </div>
               <div className='flex-1 overflow-y-auto'>

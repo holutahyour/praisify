@@ -1,5 +1,5 @@
 "use client"
-import { EVENT_LINK, ORGANIZER_LINK } from "@/utils/applinks";
+import { EVENT_LINK, ORGANIZATION_LINK } from "@/utils/applinks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiCalendarEvent, BiHelpCircle } from "react-icons/bi";
@@ -15,7 +15,7 @@ function Aside() {
     },
     {
       icon: <BsFillPeopleFill size={20} />,
-      link: ORGANIZER_LINK.LIST,
+      link: ORGANIZATION_LINK.LIST,
       active: false
     },
   ]

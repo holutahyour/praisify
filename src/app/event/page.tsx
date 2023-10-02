@@ -22,7 +22,7 @@ const Event = ({ searchParams }: Props) => {
                 <div className='flex gap-6'>
                     <SelectField label='Publish status'></SelectField>
                     <SelectField label='Event status'></SelectField>
-                    <SelectField label='Organizer'></SelectField>
+                    <SelectField label='Organization'></SelectField>
                 </div>
                 <AppModal buttonLink={EVENT_LINK.CREATE} cancelLink={EVENT_LINK.LIST} title="Create an event" isOpen={isOpen} element={<CreateEvent />} />
             </div>
