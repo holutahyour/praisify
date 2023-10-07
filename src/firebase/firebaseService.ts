@@ -3,6 +3,11 @@ import { auth, firestore } from "./firebase"
 import { toast } from "react-toastify"
 
 
+export const USER_STORE = "users";
+export const ORGANIZATION_STORE = 'organizations'
+export const INVITATION_STORE = "invitations"
+
+
 const get_list = async (store: string) => {
     try {
         const storeSnapshot = await getDocs(collection(firestore, store))
@@ -46,11 +51,9 @@ const create_doc = async (store: string, data: any, id: string | null = null) =>
 
         const ref = (id !== null) ? doc(firestore, store, id) : doc(collection(firestore, store))
 
-        const docSnapshot = await setDoc(ref, data)
+        await setDoc(ref, data)
 
         toast(`created successfully`)
-
-        return (docSnapshot)
     } catch (error) {
         toast.error(`${store} creation failed`)
     }

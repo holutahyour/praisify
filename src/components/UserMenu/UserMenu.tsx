@@ -26,7 +26,7 @@ function UserMenu({ }: Props) {
                         </div>
                     </div>
                 </div>
-                <div className="p-4 space-y-3 border-b-2 w-fit">
+                <div className="p-4 space-y-3 border-b-2">
                     <h1 className="font-bold text-xs uppercase">Praisify</h1>
                     <Link href={EVENT_LINK.LIST} className="cursor-pointer text-sm flex gap-3 justify-between items-center"><span>Manage event</span> <BsCalendarWeek /></Link>
                     <Link href={ORGANIZATION_LINK.LIST} className="cursor-pointer text-sm flex gap-3 justify-between items-center"><span className='flex-1 basis-full w-fit'>Switch organization</span> <AiOutlineSwap /></Link>

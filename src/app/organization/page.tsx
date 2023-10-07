@@ -4,21 +4,26 @@ import Table from '@/components/Table'
 import AppModal from '@/components/Modal/Modal'
 import { ORGANIZATION_LINK } from '@/utils/applinks'
 import AppLayout from '@/app/(layout)/AppLayout/AppLayout'
-import services, { dummy_organizations } from '@/firebase/firebaseService'
+import services, { INVITATION_STORE, USER_STORE, dummy_organizations } from '@/firebase/firebaseService'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/firebase/firebase'
-import { useRouter } from 'next/navigation'
 import { GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from '@mui/x-data-grid'
 import CreateOrganization from './(create)/create'
 import AppCallToAction from '@/components/AppCallToAction'
 import Button from '@/components/Button'
 import { AiOutlineSwap } from 'react-icons/ai'
+import { useOrganization } from '@/utils/hooks'
+import Drawer from '@/components/Drawer'
+import Invitation from './(invitation)/Invitation'
+import { invitation_status_enum } from '@/utils/enums'
+import { v4 as uuid } from 'uuid';
 
 type Props = {
     searchParams?: { [key: string]: string | string[] | undefined | boolean };
 }
 
 type OrganizationType = {
+    id: string,
     userId: string,
     name: string,
     description: string,
@@ -29,36 +34,39 @@ const Organization = ({ searchParams }: Props) => {
     const { get_list, get_detail, create_doc, delete_doc, get_detail_by_query } = services
 
     const [user, loading] = useAuthState(auth)
+
     const isOpen = Boolean(searchParams?.cm) || false;
 
-    const router = useRouter();
 
-    const [organization, setOrganization] = useState({});
-    const [organizations, setOrganizations] = useState([]);
+    const [organizations, setOrganizations] = useState<OrganizationType[]>([]);
+    const { handle_submit, handleField } = useOrganization()
 
-    const handleField = (e: React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLInputElement>) => {
-        setOrganization((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    const handleInvitation = (id: string, email: string) => {
+        const selected_organization = organizations.find(x => x.id === id);
+        if (!selected_organization) return;
+        
+        const invitation = {
+            organization: selected_organization,
+            user:{
+                email
+            },
+            status: invitation_status_enum.PENDING
+        }
 
-        console.log(organization);
-    }
-    const handle_submit = () => {
-        setOrganization(prev => ({ ...prev, userId: user?.uid }))
+        const unique_id = uuid();
 
-        if (confirm("Create an organization ?")) {
-            create_doc(ORGANIZATION_STORE, organization, user?.uid)
-                .then(() => router.push(ORGANIZATION_LINK.LIST))
-            console.log("submited", organization)
-        };
+        create_doc(INVITATION_STORE, invitation, unique_id);
+        create_doc(`${ORGANIZATION_STORE}/${id}/${INVITATION_STORE}`, invitation, unique_id)
     }
 
     useEffect(() => {
-        get_list(ORGANIZATION_STORE)
-            .then((result) => {
-                setOrganizations(result)
-                console.log(result);
-
-            })
-    }, [get_list])
+        if (user && !loading)
+            get_list(`${USER_STORE}/${user.uid}/${ORGANIZATION_STORE}`)
+                .then((result) => {
+                    setOrganizations(result)
+                    console.log(result);
+                })
+    }, [get_list, user, loading])
 
     const columns: GridColDef[] = [
         {
@@ -67,7 +75,13 @@ const Organization = ({ searchParams }: Props) => {
             headerClassName: 'bg-gray-100',
             flex: 1,
             renderCell: (params: GridRenderCellParams<any, any, any, GridTreeNodeWithRender>) => {
-                return <Detail uid={params.row.created_by} name={params.row.name} />
+                return (
+                    <Detail
+                        uid={params.row.created_by}
+                        name={params.row.name}
+                        displayName={params.row.creator?.name}
+                    />
+                )
             },
         },
         {
@@ -78,12 +92,23 @@ const Organization = ({ searchParams }: Props) => {
             renderCell: (params: GridRenderCellParams<any, any, any, GridTreeNodeWithRender>) => {
                 return <div>
                     <Button className=''><span className='flex items-center'>Switch <AiOutlineSwap /></span></Button>
-                </div> 
+                </div>
+            },
+        },
+        {
+            field: 'action',
+            headerName: 'Action',
+            headerClassName: 'bg-gray-100',
+            flex: 0.15,
+            renderCell: (params: GridRenderCellParams<any, any, any, GridTreeNodeWithRender>) => {
+                return <div>
+                    <Drawer title='invite'>
+                        <Invitation id={params.row.id} handleInvitation={handleInvitation}/>
+                    </Drawer>
+                </div>
             },
         },
     ];
-
-
 
     return (
         <AppLayout>
@@ -118,29 +143,10 @@ export default Organization
 type DetailProps = {
     name: string,
     uid: string,
+    displayName: string,
 }
 
-export const Detail = ({ name = '', uid }: DetailProps) => {
-    const { get_detail_by_query } = services
-    const USER_STORE = 'users'
-    const UID_FIELD = 'uid'
-    const USER_ID = '604CgRiu3bWP8bEO5r0wgrbMdwD3'
-
-    const [user, setUser] = useState({
-        displayName: '',
-        email: ''
-    });
-
-    useEffect(() => {
-        get_detail_by_query(USER_STORE, UID_FIELD, uid)
-            .then((users) => {
-                setUser(users[0])
-                console.log(users[0]);
-            })
-
-    }, [get_detail_by_query, uid])
-
-
+export const Detail = ({ name = '', uid, displayName }: DetailProps) => {
     return (
         <div className='m-3 flex gap-4 items-center'>
             <div>
@@ -149,9 +155,9 @@ export const Detail = ({ name = '', uid }: DetailProps) => {
                 </p>
             </div>
             <div>
-                <p className='text-sm font-bold'>Firm Foundation</p>
+                <p className='text-sm font-bold'>{name}</p>
                 <div>
-                    <p className='text-xs'>{user?.displayName}</p>
+                    <p className='text-xs'>{displayName}</p>
                     <span className='rounded-full bg-green-600 px-2 text-[.6rem] text-white'>creator</span>
                 </div>
             </div>
